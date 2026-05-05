@@ -221,49 +221,21 @@ textarea{resize:vertical;min-height:72px;}
   .mbti-grid{grid-template-columns:1fr;}
   .page{padding:52px 14px 40px;}
   .footer-social{flex-direction:column;gap:8px;}
-  .payment-grid{grid-template-columns:1fr 1fr;}
 }
+/* HERO BANNER */
+.hero-banner{background:var(--black);color:var(--white);margin:-56px -20px 0;padding:48px 24px 36px;border-bottom:4px solid var(--yellow);}
+.hero-eyebrow{font-size:11px;letter-spacing:0.25em;color:var(--yellow);font-family:'Syne',sans-serif;font-weight:700;text-transform:uppercase;margin-bottom:12px;}
+.hero-big{font-family:'Syne',sans-serif;font-size:clamp(52px,12vw,96px);font-weight:800;line-height:0.9;letter-spacing:-0.03em;color:var(--white);}
+.hero-sub-big{font-family:'Syne',sans-serif;font-size:clamp(18px,4vw,32px);font-weight:400;color:var(--yellow);letter-spacing:0.08em;margin-bottom:28px;}
+.hero-taglines{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;padding:20px;background:rgba(255,255,255,0.05);border-left:3px solid var(--yellow);}
+.tagline-item{font-size:14px;line-height:1.7;color:#ccc;font-family:'Noto Sans TC',sans-serif;}
+.tagline-accent{font-size:15px;color:var(--white);font-weight:700;}
+.hero-steps-hint{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hint-step{display:flex;align-items:center;gap:6px;}
+.hint-num{font-family:'Syne',sans-serif;font-size:10px;font-weight:800;background:var(--yellow);color:var(--black);padding:2px 7px;}
+.hint-text{font-size:11px;color:#aaa;font-family:'Syne',sans-serif;letter-spacing:0.05em;}
+.hint-arrow{color:var(--yellow);font-size:14px;font-weight:700;}
 
-/* PREVIEW SECTION */
-.preview-section{margin:24px 0;}
-.preview-label{display:flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:14px;color:var(--orange);}
-
-/* PAYWALL */
-.paywall-box{border:var(--border);box-shadow:var(--shadow-lg);overflow:hidden;margin:8px 0 32px;background:var(--white);}
-.paywall-blur-hint{padding:12px 16px 0;display:flex;flex-direction:column;gap:6px;opacity:0.35;}
-.blur-item{height:38px;background:linear-gradient(90deg,#eee 60%,transparent);border:1.5px solid #ddd;filter:blur(3px);}
-.blur-item.short{width:60%;}
-.paywall-content{padding:28px 20px 24px;text-align:center;}
-.paywall-lock{width:56px;height:56px;background:var(--yellow);border:var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:var(--shadow);}
-.paywall-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px;}
-.paywall-sub{font-size:13px;color:#666;line-height:1.7;margin-bottom:20px;max-width:340px;margin-left:auto;margin-right:auto;}
-.paywall-price{background:var(--black);color:var(--white);padding:16px;margin-bottom:20px;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.price-main{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--yellow);}
-.price-sub{font-size:11px;color:#aaa;letter-spacing:0.05em;}
-.payment-methods{margin-bottom:20px;}
-.payment-title{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;font-family:'Syne',sans-serif;margin-bottom:12px;color:#888;}
-.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.pay-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border:var(--border);background:var(--white);font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:all 0.1s;font-family:'Syne',sans-serif;}
-.pay-btn:hover{box-shadow:none;transform:translate(4px,4px);}
-.pay-line{background:#06C755;color:var(--white);border-color:#05a848;}
-.pay-jkopay{background:#FF6600;color:var(--white);border-color:#e05a00;}
-.pay-card{background:var(--blue);color:var(--black);}
-.pay-cvs{background:var(--purple);color:var(--white);border-color:#9333ea;}
-.demo-unlock{margin-top:12px;width:100%;padding:11px;border:2px dashed #bbb;background:transparent;font-size:12px;color:#999;cursor:pointer;font-family:'Syne',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;transition:all 0.15s;}
-.demo-unlock:hover{border-color:var(--green);color:var(--green);}
-.unlocked-banner{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--green);border:var(--border);box-shadow:var(--shadow);font-family:'Syne',sans-serif;font-size:13px;font-weight:800;margin-bottom:18px;}
-
-/* PAYMENT MODAL */
-.pay-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:600;justify-content:center;align-items:center;padding:20px;}
-.pay-modal.open{display:flex;}
-.pay-modal-box{background:var(--bg);border:var(--border);box-shadow:var(--shadow-lg);padding:28px;max-width:400px;width:100%;position:relative;}
-.pay-modal-close{position:absolute;top:14px;right:14px;border:var(--border);background:var(--black);color:var(--white);width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
-.pay-modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:4px;}
-.pay-modal-amount{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--orange);margin:8px 0 16px;}
-.pay-modal-body{font-size:13px;line-height:1.9;color:#555;}
-.pay-qr{width:130px;height:130px;background:#f0f0f0;border:var(--border);margin:12px auto;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:10px;text-align:center;}
-.pay-step{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-size:13px;}
-.pay-step-num{font-family:'Syne',sans-serif;font-weight:800;color:var(--orange);min-width:20px;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -290,7 +262,39 @@ textarea{resize:vertical;min-height:72px;}
   <div class="progress-steps">
     <div class="p-step active"></div><div class="p-step"></div><div class="p-step"></div><div class="p-step"></div>
   </div>
-  <div class="page-header">
+
+  <!-- HERO BANNER -->
+  <div class="hero-banner">
+    <div class="hero-title-block">
+      <div class="hero-eyebrow" data-zh="你這一生，想完成什麼？" data-en="What do you want to do before you die?">你這一生，想完成什麼？</div>
+      <h1 class="hero-big" data-zh="100 件事" data-en="100 Things">100 件事</h1>
+      <div class="hero-sub-big" data-zh="Before Hired" data-en="Before Hired">Before Hired</div>
+    </div>
+    <div class="hero-taglines">
+      <div class="tagline-item" data-zh="有些事，現在不做，就永遠沒機會了。" data-en="Some things, if not done now, will never happen.">有些事，現在不做，就永遠沒機會了。</div>
+      <div class="tagline-item tagline-accent" data-zh="這不是清單，是一封寫給未來自己的信。" data-en="This isn't a list — it's a letter to your future self.">這不是清單，是一封寫給未來自己的信。</div>
+      <div class="tagline-item" data-zh="根據你的 MBTI、個性、與人生故事，生成專屬於你的 100 件事。" data-en="Generated from your MBTI, personality, and life story — 100 things made just for you.">根據你的 MBTI、個性、與人生故事，生成專屬於你的 100 件事。</div>
+    </div>
+    <div class="hero-steps-hint">
+      <div class="hint-step" data-zh="填寫你的資料" data-en="Fill in your profile">
+        <div class="hint-num">01</div><div class="hint-text" data-zh="填寫你的資料" data-en="Fill in your profile">填寫你的資料</div>
+      </div>
+      <div class="hint-arrow">→</div>
+      <div class="hint-step" data-zh="說說你的故事" data-en="Share your story">
+        <div class="hint-num">02</div><div class="hint-text" data-zh="說說你的故事" data-en="Share your story">說說你的故事</div>
+      </div>
+      <div class="hint-arrow">→</div>
+      <div class="hint-step" data-zh="選你想做的事" data-en="Pick your wishes">
+        <div class="hint-num">03</div><div class="hint-text" data-zh="選你想做的事" data-en="Pick your wishes">選你想做的事</div>
+      </div>
+      <div class="hint-arrow">→</div>
+      <div class="hint-step" data-zh="拿到你的清單" data-en="Get your list">
+        <div class="hint-num">04</div><div class="hint-text" data-zh="拿到你的清單" data-en="Get your list">拿到你的清單</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-header" style="margin-top:32px;">
     <div class="step-tag" data-zh="第一步" data-en="STEP 1">第一步</div>
     <h1 class="page-title" data-zh="你是誰" data-en="Who Are You">你是誰</h1>
     <p class="page-sub" data-zh="填寫基本資料，讓我們認識你" data-en="Tell us a bit about yourself">填寫基本資料，讓我們認識你</p>
@@ -451,107 +455,48 @@ textarea{resize:vertical;min-height:72px;}
     <div class="result-meta" id="resultMeta"></div>
   </div>
 
-  <!-- SECTION 1: ANALYSIS & ENCOURAGEMENT -->
+  <div class="controls-bar">
+    <span class="ctrl-label" data-zh="操作：" data-en="Actions:">操作：</span>
+    <button class="btn-secondary btn-orange" onclick="copyList()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span data-zh="複製文字檔" data-en="Copy as Text">複製文字檔</span>
+    </button>
+    <button class="btn-secondary btn-green" onclick="shareAndView()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span data-zh="分享並查看大家的清單" data-en="Share & View Others">分享並查看大家的清單</span>
+    </button>
+  </div>
+
+  <div id="listContainer" class="list-container"></div>
+
+  <!-- ENCOURAGEMENT BOX -->
   <div class="encourage-box" id="encourageBox" style="display:none;">
     <div class="encourage-header">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <span class="encourage-header-title" data-zh="你的人生分析" data-en="Your Life Analysis">你的人生分析</span>
+      <span class="encourage-header-title" data-zh="給你的話" data-en="A Note for You">給你的話</span>
     </div>
     <div class="encourage-body">
-      <p class="encourage-text" id="encourageText"></p>
+      <div class="encourage-loading" id="encourageLoading">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <span data-zh="分析中..." data-en="Analyzing...">分析中...</span>
+      </div>
+      <p class="encourage-text" id="encourageText" style="display:none;"></p>
     </div>
   </div>
 
-  <!-- SECTION 2: FREE PREVIEW — 20 items -->
-  <div class="preview-section">
-    <div class="preview-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span data-zh="搶先看！最特別的 20 件事" data-en="Preview! Your top 20 things">搶先看！最特別的 20 件事</span>
-    </div>
-    <div id="previewList" class="list-container"></div>
+  <div style="text-align:center;margin:8px 0 32px;">
+    <button class="btn-primary btn-pink" onclick="regenerateMissing()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      <span data-zh="刪除後補齊至 100 件" data-en="Refill deleted items to 100">刪除後補齊至 100 件</span>
+    </button>
   </div>
 
-  <!-- SECTION 3: PAYWALL -->
-  <div class="paywall-box" id="paywallBox">
-    <div class="paywall-blur-hint">
-      <div class="blur-item"></div>
-      <div class="blur-item"></div>
-      <div class="blur-item short"></div>
+  <div class="share-box" id="shareSection" style="display:none;">
+    <div class="share-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span data-zh="大家的百件清單" data-en="Everyone's 100 Lists">大家的百件清單</span>
     </div>
-    <div class="paywall-content">
-      <div class="paywall-lock">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <div class="paywall-title" data-zh="還有 80 件等你解鎖" data-en="80 more things waiting for you">還有 80 件等你解鎖</div>
-      <div class="paywall-sub" data-zh="這份清單是專為你生成的，只需 NT$49 就能看到完整的 100 件人生清單" data-en="This list was made just for you — unlock all 100 for NT$49">這份清單是專為你生成的，只需 NT$49 就能看到完整的 100 件人生清單</div>
-      <div class="paywall-price">
-        <span class="price-main">NT$ 49</span>
-        <span class="price-sub" data-zh="一杯咖啡的價格，換一份人生清單" data-en="Less than a coffee — for your life list">一杯咖啡的價格，換一份人生清單</span>
-      </div>
-      <div class="payment-methods">
-        <div class="payment-title" data-zh="選擇付款方式" data-en="Choose payment method">選擇付款方式</div>
-        <div class="payment-grid">
-          <button class="pay-btn pay-line" onclick="handlePayment('linepay')">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
-            <span>LINE Pay</span>
-          </button>
-          <button class="pay-btn pay-jkopay" onclick="handlePayment('jkopay')">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-            <span>街口支付</span>
-          </button>
-          <button class="pay-btn pay-card" onclick="handlePayment('card')">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
-            <span data-zh="信用卡" data-en="Credit Card">信用卡</span>
-          </button>
-          <button class="pay-btn pay-cvs" onclick="handlePayment('cvs')">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <span data-zh="超商條碼" data-en="Convenience Store">超商條碼</span>
-          </button>
-        </div>
-      </div>
-      <!-- Demo unlock for testing -->
-      <button class="demo-unlock" onclick="unlockFull()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
-        <span data-zh="我已付款，解鎖完整清單" data-en="I've paid — unlock my full list">我已付款，解鎖完整清單</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- SECTION 4: FULL LIST (hidden until paid) -->
-  <div id="fullListSection" style="display:none;">
-    <div class="unlocked-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <span data-zh="已解鎖！完整 100 件人生清單" data-en="Unlocked! Your full 100 things">已解鎖！完整 100 件人生清單</span>
-    </div>
-
-    <div class="controls-bar">
-      <span class="ctrl-label" data-zh="操作：" data-en="Actions:">操作：</span>
-      <button class="btn-secondary btn-orange" onclick="copyList()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span data-zh="複製文字檔" data-en="Copy as Text">複製文字檔</span>
-      </button>
-      <button class="btn-secondary btn-green" onclick="shareAndView()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span data-zh="分享並查看大家的清單" data-en="Share & View Others">分享並查看大家的清單</span>
-      </button>
-    </div>
-
-    <div id="listContainer" class="list-container"></div>
-
-    <div style="text-align:center;margin:8px 0 32px;">
-      <button class="btn-primary btn-pink" onclick="regenerateMissing()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        <span data-zh="刪除後補齊至 100 件" data-en="Refill deleted items to 100">刪除後補齊至 100 件</span>
-      </button>
-    </div>
-
-    <div class="share-box" id="shareSection" style="display:none;">
-      <div class="share-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span data-zh="大家的百件清單" data-en="Everyone's 100 Lists">大家的百件清單</span>
-      </div>
-      <div class="community-feed" id="communityFeed"></div>
-    </div>
+    <div class="community-feed" id="communityFeed"></div>
   </div>
 
   <div class="btn-row" style="margin-top:28px;">
@@ -559,16 +504,6 @@ textarea{resize:vertical;min-height:72px;}
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       <span data-zh="重新開始" data-en="Start Over">重新開始</span>
     </button>
-  </div>
-</div>
-
-<!-- PAYMENT MODAL -->
-<div class="pay-modal" id="payModal" onclick="if(event.target===this)closePayModal()">
-  <div class="pay-modal-box">
-    <button class="pay-modal-close" onclick="closePayModal()">✕</button>
-    <div class="pay-modal-title" id="payModalTitle"></div>
-    <div class="pay-modal-amount">NT$ 49</div>
-    <div class="pay-modal-body" id="payModalBody"></div>
   </div>
 </div>
 
@@ -822,11 +757,33 @@ function getCrazyThings() {
 function buildInspiration() {
   var mbti = getMBTI();
   var traits = getTraits();
+  var career = (document.getElementById('career') ? document.getElementById('career').value.trim() : '');
+  var crazy = getCrazyThings();
+  var birthdate = document.getElementById('birthdate') ? document.getElementById('birthdate').value : '';
+  var age = 0;
+  if (birthdate) { age = new Date().getFullYear() - parseInt(birthdate.split('-')[0]); }
   var src = ALL_INSPO[currentLang];
-  // Personalize order by mbti seed
-  var seed = mbti.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+
+  // Build personalized score: base on mbti + career + crazy count + age
+  var careerSeed = career.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+  var crazySeed = crazy.join('').split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+  var seed = mbti.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0) + traits.length * 7 + careerSeed + crazySeed + age;
+
   inspirationItems = src.map(function(item, i) {
-    return {text: item, score: Math.sin((seed + traits.length) * (i + 1)) * 10000};
+    var score = Math.sin((seed + traits.length) * (i + 1)) * 10000;
+    // Boost adventure items for younger users or if they've done crazy things
+    if (age < 30 || crazy.length > 2) {
+      if (/跳傘|衝浪|攀岩|極限|冒險|skydiv|surf|climb|extreme|adventure/i.test(item)) score += 3000;
+    }
+    // Boost creative/skill for design/tech career
+    if (/設計|design|engineer|程式|code/i.test(career)) {
+      if (/學|技能|創作|skill|learn|creat/i.test(item)) score += 2000;
+    }
+    // Boost relationship/self for older users
+    if (age > 35) {
+      if (/家人|父母|朋友|自己|parent|family|friend|self/i.test(item)) score += 2000;
+    }
+    return {text: item, score: score};
   }).sort(function(a,b) { return b.score - a.score; });
 
   var grid = document.getElementById('inspGrid');
@@ -1107,7 +1064,7 @@ var STRUGGLE_BOOSTS = {
   }
 };
 
-function smartGenerate(mbti, traitStr, struggle, count, lang, exclude) {
+function smartGenerate(mbti, traitStr, struggle, count, lang, exclude, career, crazy, age) {
   var pool = POOL[lang];
   var cats = Object.keys(pool);
   var weights = {};
@@ -1134,12 +1091,41 @@ function smartGenerate(mbti, traitStr, struggle, count, lang, exclude) {
     });
   }
 
+  // Career-based boosts
+  if (career) {
+    var c = career.toLowerCase();
+    if (/醫|護|藥|health|nurse|doctor|med/.test(c)) { weights['self'] = (weights['self']||1)*1.4; weights['volunteer']=(weights['volunteer']||1)*1.3; }
+    if (/工程|engineer|程式|code|tech|資工/.test(c)) { weights['skill']=(weights['skill']||1)*1.3; weights['creative']=(weights['creative']||1)*1.2; }
+    if (/設計|design|art|藝術|創意/.test(c)) { weights['creative']=(weights['creative']||1)*1.5; weights['travel']=(weights['travel']||1)*1.2; }
+    if (/教|teacher|教育|edu/.test(c)) { weights['relationship']=(weights['relationship']||1)*1.3; weights['volunteer']=(weights['volunteer']||1)*1.3; }
+    if (/商|business|business|行銷|market/.test(c)) { weights['dream']=(weights['dream']||1)*1.3; weights['travel']=(weights['travel']||1)*1.2; }
+    if (/學生|student|大學|university/.test(c)) { weights['adventure']=(weights['adventure']||1)*1.3; weights['travel']=(weights['travel']||1)*1.2; }
+  }
+
+  // Age-based boosts
+  if (age) {
+    var a = parseInt(age);
+    if (a < 25) { weights['adventure']=(weights['adventure']||1)*1.3; weights['skill']=(weights['skill']||1)*1.2; }
+    else if (a < 35) { weights['dream']=(weights['dream']||1)*1.3; weights['relationship']=(weights['relationship']||1)*1.2; }
+    else if (a < 50) { weights['self']=(weights['self']||1)*1.3; weights['habit']=(weights['habit']||1)*1.2; }
+    else { weights['relationship']=(weights['relationship']||1)*1.4; weights['self']=(weights['self']||1)*1.3; }
+  }
+
+  // Crazy things — if they've done wild stuff, boost adventure
+  if (crazy && crazy.length > 0) {
+    weights['adventure'] = (weights['adventure']||1) * (1 + crazy.length * 0.1);
+    weights['travel'] = (weights['travel']||1) * (1 + crazy.length * 0.08);
+  }
+
   // Build weighted shuffled pool
   var excludeSet = {};
   (exclude || []).forEach(function(e) { excludeSet[e] = true; });
 
-  // Shuffle each category deterministically using mbti+traits as seed
-  var seed = mbti.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0) + traitStr.length * 7;
+  // Shuffle each category using mbti+traits+career+age as unique seed
+  var careerSeed = (career || '').split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+  var crazySeed = (crazy || []).join('').split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+  var seed = mbti.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0) + traitStr.length * 7 + careerSeed + crazySeed + (parseInt(age)||0);
+
   function seededShuffle(arr, s) {
     var a = arr.slice();
     for (var i = a.length - 1; i > 0; i--) {
@@ -1226,14 +1212,62 @@ var ENCOURAGE = {
   }
 };
 
-function buildEncouragement(mbti, traits, struggle, isZh) {
+function buildEncouragement(mbti, traits, struggle, isZh, career, crazy, age) {
   var E = ENCOURAGE[isZh ? 'zh' : 'en'];
   var seed = mbti.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+  var ageNum = parseInt(age) || 0;
+  var crazyCount = (crazy || []).filter(Boolean).length;
 
-  // Pick base sentence
+  // --- Part 1: personality read ---
   var base = E.base[seed % E.base.length];
 
-  // Pick struggle sentence
+  // MBTI-specific personality insight
+  var mbtiInsight = '';
+  if (isZh) {
+    if (mbti.indexOf('I') !== -1 && mbti.indexOf('N') !== -1) mbtiInsight = '你屬於那種習慣在腦袋裡先把世界想清楚再開口的人。你的想法比你說出來的多得多，但那些沒說出來的，往往才是最珍貴的。';
+    else if (mbti.indexOf('E') !== -1 && mbti.indexOf('F') !== -1) mbtiInsight = '你很容易感受到別人的情緒，也很容易被周圍的人影響。這是一種天賦，但記得也要好好保護自己的感受。';
+    else if (mbti.indexOf('T') !== -1 && mbti.indexOf('J') !== -1) mbtiInsight = '你是那種做事有條理、邏輯清晰的人。你的強項是把大目標拆解成可執行的步驟，但有時候也允許自己跳過計畫，直接去感受。';
+    else if (mbti.indexOf('P') !== -1) mbtiInsight = '你喜歡保留彈性，不喜歡被框住。這讓你能在生活的縫隙裡找到意想不到的美好，只要你願意跑出去找。';
+    else mbtiInsight = '你有一套自己看世界的方式，不完全像任何人。這份獨特性，正是你這份清單會跟別人不一樣的原因。';
+  } else {
+    if (mbti.indexOf('I') !== -1 && mbti.indexOf('N') !== -1) mbtiInsight = 'You\'re someone who processes the world internally before speaking. There\'s a whole universe happening in your head that most people never get to see — and that\'s where your best ideas live.';
+    else if (mbti.indexOf('E') !== -1 && mbti.indexOf('F') !== -1) mbtiInsight = 'You feel other people\'s emotions easily, sometimes more than your own. That\'s a rare kind of empathy — just remember to take care of yourself too.';
+    else if (mbti.indexOf('T') !== -1 && mbti.indexOf('J') !== -1) mbtiInsight = 'You\'re someone who brings structure and clarity to chaos. You\'re great at turning big goals into action — just give yourself permission to sometimes feel before you plan.';
+    else if (mbti.indexOf('P') !== -1) mbtiInsight = 'You love keeping your options open, and that\'s actually a superpower. The best things in your life will probably come from the detours, not the plan.';
+    else mbtiInsight = 'You have your own way of seeing the world that doesn\'t quite match anyone else\'s — and that\'s exactly why this list will be different from everyone else\'s.';
+  }
+
+  // --- Part 2: age reflection ---
+  var ageReflection = '';
+  if (ageNum > 0) {
+    if (isZh) {
+      if (ageNum < 25) ageReflection = '你才' + ageNum + '歲，這份清單對你來說是一張空白的地圖。你不需要急著填滿，但你需要開始移動。';
+      else if (ageNum < 30) ageReflection = ageNum + '歲，剛好是那個既不年輕也不算老的微妙時刻。你已經夠成熟去做一些真正有意思的事，又還夠輕盈去犯幾個值得的錯。';
+      else if (ageNum < 40) ageReflection = '三十幾歲有一種特別的清醒，你開始真正知道什麼對自己重要，而不只是跟著別人的時間表走。這份清單，就是屬於你自己的時間表。';
+      else if (ageNum < 50) ageReflection = '你走過的這些年，累積了比你自己知道的更多。四十幾歲的人生清單，不是要你重新開始，而是要你把那些一直想做但一直推遲的事，終於排進行程。';
+      else ageReflection = '你走到這裡，已經比大多數人更清楚什麼是真正值得的。這份清單不是為了追趕什麼，而是為了好好品味還沒品味到的。';
+    } else {
+      if (ageNum < 25) ageReflection = 'At ' + ageNum + ', this list is a blank map for you. You don\'t need to rush to fill it, but you do need to start moving.';
+      else if (ageNum < 30) ageReflection = 'Being ' + ageNum + ' is a strange and wonderful in-between — old enough to do things that really matter, young enough to still make the worthwhile mistakes.';
+      else if (ageNum < 40) ageReflection = 'Your thirties bring a kind of clarity. You\'re starting to truly know what matters to you, not just what everyone else\'s timeline says should matter. This list is your own timeline.';
+      else if (ageNum < 50) ageReflection = 'The years you\'ve lived have given you more than you realize. A list in your forties isn\'t about starting over — it\'s about finally scheduling the things you\'ve been putting off.';
+      else ageReflection = 'You\'ve arrived here knowing more than most about what\'s truly worth your time. This list isn\'t about catching up — it\'s about savoring what you haven\'t savored yet.';
+    }
+  }
+
+  // --- Part 3: crazy things reflection ---
+  var crazyReflection = '';
+  if (crazyCount > 0) {
+    if (isZh) {
+      if (crazyCount >= 3) crazyReflection = '你已經做過 ' + crazyCount + ' 件讓大多數人不敢做的事了。這告訴我一件事：當你真的決定要做某件事的時候，你是真的會去做的。這份清單上的每一件事，你都有能力完成，只要你願意給它一個「決定」的時刻。';
+      else crazyReflection = '你做過的那些「瘋狂的事」，讓我看到你身上有一種很多人沒有的東西：你願意跨出去。那個跨出去的勇氣，才是你這份清單最大的資本。';
+    } else {
+      if (crazyCount >= 3) crazyReflection = 'You\'ve already done ' + crazyCount + ' things most people wouldn\'t dare. That tells me something: when you truly decide to do something, you actually do it. Every item on this list is within your reach — it just needs a moment of decision.';
+      else crazyReflection = 'The "crazy" things you\'ve done show something most people don\'t have: you\'re willing to step out. That willingness to step is the biggest asset behind this entire list.';
+    }
+  }
+
+  // --- Part 4: struggle ---
   var struggleText = '';
   if (struggle) {
     var boostMap = STRUGGLE_BOOSTS[isZh ? 'zh' : 'en'];
@@ -1241,16 +1275,26 @@ function buildEncouragement(mbti, traits, struggle, isZh) {
     if (matched && E.struggle[matched]) struggleText = E.struggle[matched];
   }
   if (!struggleText) {
-    // Generic struggle encouragement
     struggleText = isZh
-      ? '人生有些難關是沒有辦法跳過的，只能穿越。但穿越過的人，都會變得更完整。'
-      : 'Some chapters in life can\'t be skipped — only lived through. Those who do come out more whole.';
+      ? '人生有些難關是沒有辦法跳過的，只能穿越。但穿越過的人，都會變得更完整。你現在面對的，不管有多難，都是你故事的一部分，而不是你故事的終點。'
+      : 'Some chapters in life can\'t be skipped — only lived through. Whatever you\'re facing right now, however hard it is, it\'s part of your story, not the end of it.';
   }
 
-  // Pick close line
+  // --- Part 5: closing ---
   var close = E.close[(seed + 3) % E.close.length];
+  var closing2 = isZh
+    ? '這份清單不需要你今天就全部做完。你只需要做第一件，然後第二件，然後有一天，你會驚訝地發現，你已經活成了一個故事。'
+    : 'You don\'t need to complete this list today. Just start with the first thing, then the second — and one day, you\'ll look back and realize you\'ve lived a story worth telling.';
 
-  return base + '\n\n' + struggleText + '\n\n' + close;
+  var parts = [base];
+  if (mbtiInsight) parts.push(mbtiInsight);
+  if (ageReflection) parts.push(ageReflection);
+  if (crazyReflection) parts.push(crazyReflection);
+  parts.push(struggleText);
+  parts.push(close);
+  parts.push(closing2);
+
+  return parts.join('\n\n');
 }
 
 function generateList() {
@@ -1276,12 +1320,12 @@ function generateList() {
   }
 
   showLoading(true);
-  currentUserData = {nickname: nickname, age: age, zodiac: zodiac, mbti: mbti, traits: traits, crazy: crazy, struggle: struggle, isZh: isZh};
+  currentUserData = {nickname: nickname, age: age, zodiac: zodiac, mbti: mbti, traits: traits, crazy: crazy, struggle: struggle, isZh: isZh, career: career};
 
   // Generate locally — no API needed
   setTimeout(function() {
     var needed = Math.max(0, 95 - future5.length);
-    var generated = smartGenerate(mbti, traits, struggle, needed, isZh ? 'zh' : 'en', future5);
+    var generated = smartGenerate(mbti, traits, struggle, needed, isZh ? 'zh' : 'en', future5, career, crazy, age);
     finalList = future5.concat(generated).slice(0, 100);
     showLoading(false);
     buildResultPage(nickname, age, zodiac, mbti);
@@ -1301,7 +1345,8 @@ function regenerateMissing() {
   setTimeout(function() {
     var newItems = smartGenerate(
       d.mbti || 'XXXX', d.traits || '', d.struggle || '',
-      missing, currentLang === 'zh' ? 'zh' : 'en', finalList
+      missing, currentLang === 'zh' ? 'zh' : 'en', finalList,
+      d.career || '', d.crazy || [], d.age || ''
     );
     finalList = finalList.concat(newItems);
     showLoading(false);
@@ -1317,7 +1362,7 @@ function showEncouragement() {
   box.style.display = 'block';
   loadEl.style.display = 'none';
   textEl.style.display = 'block';
-  var text = buildEncouragement(d.mbti || 'XXXX', d.traits || '', d.struggle || '', d.isZh);
+  var text = buildEncouragement(d.mbti || 'XXXX', d.traits || '', d.struggle || '', d.isZh, d.career || '', d.crazy || [], d.age || '');
   textEl.style.whiteSpace = 'pre-line';
   textEl.textContent = text;
 }
@@ -1334,126 +1379,12 @@ function buildResultPage(name, age, zodiac, mbti) {
   if (mbti !== 'XXXX') tags.push(mbti);
   if (zodiac) tags.push(zodiac);
   if (age) tags.push(isZh ? age + '歲' : 'Age ' + age);
-  tags.push(isZh ? '100件' : '100 things');
+  tags.push(isZh ? finalList.length + '/100件' : finalList.length + '/100');
   meta.innerHTML = tags.map(function(t) { return '<span class="meta-tag">' + t + '</span>'; }).join('');
-  renderPreview();
-  // Full list hidden until paid
-  document.getElementById('fullListSection').style.display = 'none';
-  document.getElementById('paywallBox').style.display = 'block';
-}
-
-function renderPreview() {
-  var container = document.getElementById('previewList');
-  if (!container) return;
-  container.innerHTML = '';
-  var preview = finalList.slice(0, 20);
-  preview.forEach(function(item, i) {
-    var row = document.createElement('div');
-    row.className = 'list-item';
-    row.innerHTML = '<span class="item-num">' + String(i+1).padStart(2,'0') + '.</span>' +
-      '<span style="flex:1;font-size:14px;line-height:1.6;font-family:\'Noto Sans TC\',sans-serif;">' + item + '</span>';
-    container.appendChild(row);
-  });
-}
-
-function unlockFull() {
-  document.getElementById('paywallBox').style.display = 'none';
-  document.getElementById('fullListSection').style.display = 'block';
   renderList();
-  document.getElementById('fullListSection').scrollIntoView({behavior:'smooth'});
 }
 
-var PAYMENT_INFO = {
-  linepay: {
-    zh: {
-      title: 'LINE Pay 付款',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>打開 LINE App，點選右下角「錢包」</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>選擇「LINE Pay」</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>掃描下方 QR Code 或轉帳至：<br><strong>LINE Pay ID: 100thingsbeforehired</strong></span></div>' +
-            '<div class="pay-qr">QR Code<br>（串接後顯示）</div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>付款完成後點下方「我已付款」按鈕</span></div>'
-    },
-    en: {
-      title: 'LINE Pay Payment',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>Open LINE App, tap "Wallet" at bottom right</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>Select "LINE Pay"</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>Scan QR Code or transfer to:<br><strong>LINE Pay ID: 100thingsbeforehired</strong></span></div>' +
-            '<div class="pay-qr">QR Code<br>(shown after integration)</div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>After payment, tap "I\'ve paid" below</span></div>'
-    }
-  },
-  jkopay: {
-    zh: {
-      title: '街口支付',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>打開街口 App</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>點「掃碼付款」掃描下方 QR Code</span></div>' +
-            '<div class="pay-qr">QR Code<br>（串接後顯示）</div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>確認金額 NT$49，完成付款</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>付款完成後點下方「我已付款」</span></div>'
-    },
-    en: {
-      title: 'JKO Pay',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>Open JKO Pay App</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>Tap "Scan to Pay" and scan the QR Code</span></div>' +
-            '<div class="pay-qr">QR Code<br>(shown after integration)</div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>Confirm NT$49 and complete payment</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>Tap "I\'ve paid" below after payment</span></div>'
-    }
-  },
-  card: {
-    zh: {
-      title: '信用卡付款',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>點下方按鈕前往安全付款頁面</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>輸入信用卡資料（Visa / Mastercard / JCB）</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>確認金額 NT$49</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>付款成功後自動解鎖清單</span></div>' +
-            '<br><button class="btn-primary" style="width:100%;justify-content:center;" onclick="unlockFull();closePayModal()">前往信用卡付款頁面</button>'
-    },
-    en: {
-      title: 'Credit Card Payment',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>Click below to go to secure payment page</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>Enter card details (Visa / Mastercard / JCB)</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>Confirm NT$49</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>List unlocks automatically after payment</span></div>' +
-            '<br><button class="btn-primary" style="width:100%;justify-content:center;" onclick="unlockFull();closePayModal()">Go to Payment Page</button>'
-    }
-  },
-  cvs: {
-    zh: {
-      title: '超商條碼繳費',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>系統產生專屬繳費條碼（有效期限 24 小時）</span></div>' +
-            '<div class="pay-qr">條碼<br>（串接後顯示）</div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>前往 7-11 / 全家 / 萊爾富 掃描條碼</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>繳費 NT$49</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>繳費完成後點下方「我已付款」</span></div>'
-    },
-    en: {
-      title: 'Convenience Store Payment',
-      body: '<div class="pay-step"><span class="pay-step-num">1.</span><span>A unique barcode is generated (valid 24 hours)</span></div>' +
-            '<div class="pay-qr">Barcode<br>(shown after integration)</div>' +
-            '<div class="pay-step"><span class="pay-step-num">2.</span><span>Go to 7-11 / FamilyMart / Hi-Life and scan</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">3.</span><span>Pay NT$49</span></div>' +
-            '<div class="pay-step"><span class="pay-step-num">4.</span><span>Tap "I\'ve paid" below after payment</span></div>'
-    }
-  }
-};
-
-function handlePayment(method) {
-  var isZh = currentLang === 'zh';
-  var info = PAYMENT_INFO[method][isZh ? 'zh' : 'en'];
-  document.getElementById('payModalTitle').textContent = info.title;
-  var paidBtn = isZh
-    ? '<br><button class="btn-primary btn-green" style="width:100%;justify-content:center;margin-top:8px;" onclick="unlockFull();closePayModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 我已付款，解鎖清單</button>'
-    : '<br><button class="btn-primary btn-green" style="width:100%;justify-content:center;margin-top:8px;" onclick="unlockFull();closePayModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> I\'ve paid — Unlock my list</button>';
-  document.getElementById('payModalBody').innerHTML = info.body + (method !== 'card' ? paidBtn : '');
-  document.getElementById('payModal').classList.add('open');
-}
-
-function closePayModal() {
-  document.getElementById('payModal').classList.remove('open');
-}
-
-
+function renderList() {
   var container = document.getElementById('listContainer');
   if (!container) return;
   container.innerHTML = '';
