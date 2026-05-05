@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>100 Things — Life List Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#FFF9F0;--black:#1a1a1a;--pink:#FF6B9D;--yellow:#FFD93D;
+  --blue:#4ECDC4;--orange:#FF6B35;--purple:#A855F7;--green:#6BCB77;
+  --red:#FF4757;--white:#FFFFFF;
+  --border:3px solid var(--black);--shadow:4px 4px 0 var(--black);--shadow-lg:6px 6px 0 var(--black);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Noto Sans TC',sans-serif;color:var(--black);min-height:100vh;overflow-x:hidden;}
+
+/* LANG BAR */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--black);display:flex;justify-content:flex-end;align-items:center;padding:8px 20px;gap:4px;}
+.lang-btn{padding:4px 14px;font-size:11px;font-weight:700;letter-spacing:0.15em;border:2px solid var(--white);background:transparent;color:var(--white);cursor:pointer;font-family:'Syne',sans-serif;}
+.lang-btn.active{background:var(--yellow);color:var(--black);border-color:var(--yellow);}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding:56px 20px 48px;max-width:720px;margin:0 auto;}
+.page.active{display:block;}
+
+/* STEPS */
+.progress-steps{display:flex;gap:4px;margin-bottom:32px;padding-top:16px;}
+.p-step{flex:1;height:6px;background:#ddd;border:1px solid #bbb;}
+.p-step.done{background:var(--black);}
+.p-step.active{background:var(--yellow);}
+
+/* HEADERS */
+.step-tag{display:inline-block;background:var(--yellow);border:2px solid var(--black);padding:4px 14px;font-size:11px;font-weight:700;letter-spacing:0.2em;font-family:'Syne',sans-serif;margin-bottom:14px;}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(32px,7vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:8px;}
+.page-sub{font-size:13px;color:#777;line-height:1.7;margin-bottom:28px;}
+.page-header{margin-bottom:32px;padding-bottom:18px;border-bottom:var(--border);}
+
+/* FIELD */
+.field-group{margin-bottom:24px;}
+.field-label{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;font-family:'Syne',sans-serif;margin-bottom:8px;display:flex;align-items:center;gap:7px;}
+.field-label svg{width:15px;height:15px;flex-shrink:0;}
+
+/* INPUTS */
+input[type=text],input[type=date],textarea{
+  width:100%;border:var(--border);background:var(--white);padding:11px 14px;
+  font-size:15px;font-family:'Noto Sans TC',sans-serif;color:var(--black);
+  outline:none;box-shadow:var(--shadow);transition:box-shadow 0.15s;
+  -webkit-appearance:none;border-radius:0;
+}
+input[type=text]:focus,input[type=date]:focus,textarea:focus{box-shadow:5px 5px 0 var(--pink);}
+textarea{resize:vertical;min-height:72px;}
+
+/* MBTI */
+.mbti-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.mbti-pair{border:var(--border);background:var(--white);box-shadow:var(--shadow);overflow:hidden;}
+.mbti-pair-label{background:var(--black);color:var(--white);font-size:9px;font-weight:700;letter-spacing:0.2em;padding:5px 12px;font-family:'Syne',sans-serif;}
+.mbti-options{display:flex;}
+.mbti-opt{flex:1;padding:12px 8px;text-align:center;cursor:pointer;border-right:2px solid var(--black);transition:all 0.15s;}
+.mbti-opt:last-child{border-right:none;}
+.mbti-opt:hover,.mbti-opt.selected{background:var(--yellow);}
+.mbti-letter{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;display:block;line-height:1;margin-bottom:3px;}
+.mbti-word{font-size:9px;color:#777;display:block;line-height:1.3;}
+.mbti-desc{font-size:9px;color:#aaa;display:block;line-height:1.3;margin-top:2px;}
+
+/* TRAITS */
+.trait-grid{display:flex;flex-wrap:wrap;gap:7px;}
+.trait-chip{padding:7px 14px;border:2px solid var(--black);background:var(--white);font-size:13px;cursor:pointer;transition:all 0.12s;box-shadow:2px 2px 0 var(--black);}
+.trait-chip:hover,.trait-chip.selected{background:var(--blue);box-shadow:none;transform:translate(2px,2px);}
+
+/* CRAZY */
+.crazy-list{display:flex;flex-direction:column;gap:7px;}
+.crazy-item{display:flex;gap:7px;align-items:center;}
+.crazy-item input{flex:1;}
+.remove-btn{border:2px solid var(--black);background:var(--red);color:var(--white);width:38px;height:42px;cursor:pointer;font-size:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 var(--black);}
+.remove-btn:hover{box-shadow:none;transform:translate(2px,2px);}
+.add-btn{margin-top:8px;padding:9px 18px;border:var(--border);background:var(--green);font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:all 0.1s;font-family:'Syne',sans-serif;letter-spacing:0.05em;display:inline-flex;align-items:center;gap:7px;}
+.add-btn:hover{box-shadow:none;transform:translate(4px,4px);}
+
+/* FUTURE */
+.future-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.future-item{display:flex;align-items:center;gap:10px;}
+.future-num{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;width:26px;flex-shrink:0;color:var(--orange);}
+
+/* INSPIRATION */
+.inspiration-toggle{margin-top:12px;padding:11px 18px;border:var(--border);background:var(--purple);color:var(--white);font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:all 0.1s;font-family:'Syne',sans-serif;display:flex;align-items:center;gap:8px;width:100%;justify-content:center;}
+.inspiration-toggle:hover{box-shadow:none;transform:translate(4px,4px);}
+.inspiration-panel{display:none;border:var(--border);background:var(--white);box-shadow:var(--shadow);margin-top:8px;padding:16px;}
+.inspiration-panel.open{display:block;}
+.insp-note{font-size:11px;color:#999;margin-bottom:10px;}
+.insp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px;max-height:320px;overflow-y:auto;}
+.insp-chip{padding:8px 10px;border:2px solid var(--black);background:var(--bg);font-size:12px;cursor:pointer;transition:all 0.12s;line-height:1.4;box-shadow:2px 2px 0 var(--black);}
+.insp-chip:hover,.insp-chip.picked{background:var(--yellow);box-shadow:none;transform:translate(2px,2px);}
+
+/* BUTTONS */
+.btn-primary{display:inline-flex;align-items:center;gap:9px;padding:13px 28px;border:var(--border);background:var(--black);color:var(--white);font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-lg);transition:all 0.1s;font-family:'Syne',sans-serif;letter-spacing:0.05em;}
+.btn-primary:hover{box-shadow:none;transform:translate(6px,6px);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:var(--border);background:var(--white);color:var(--black);font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:all 0.1s;font-family:'Syne',sans-serif;}
+.btn-secondary:hover{box-shadow:none;transform:translate(4px,4px);}
+.btn-yellow{background:var(--yellow);color:var(--black);}
+.btn-pink{background:var(--pink);color:var(--white);}
+.btn-orange{background:var(--orange);color:var(--white);}
+.btn-blue{background:var(--blue);color:var(--black);}
+.btn-green{background:var(--green);color:var(--black);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;align-items:center;}
+
+/* RESULT */
+.result-header{background:var(--black);color:var(--white);padding:28px 20px;margin:-56px -20px 32px;}
+.result-name{font-family:'Syne',sans-serif;font-size:clamp(22px,5vw,38px);font-weight:800;line-height:1.1;}
+.result-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.meta-tag{padding:3px 10px;border:2px solid rgba(255,255,255,0.35);font-size:11px;font-weight:700;font-family:'Syne',sans-serif;}
+
+/* CONTROLS */
+.controls-bar{display:flex;flex-wrap:wrap;gap:7px;padding:14px;background:var(--yellow);border:var(--border);box-shadow:var(--shadow);margin-bottom:18px;align-items:center;}
+.ctrl-label{font-size:10px;font-weight:700;letter-spacing:0.1em;font-family:'Syne',sans-serif;}
+
+/* LIST */
+.list-container{display:flex;flex-direction:column;gap:3px;margin-bottom:24px;}
+.list-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:2px solid var(--black);background:var(--white);transition:all 0.1s;}
+.list-item:hover{background:#fffbf0;}
+.item-num{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:var(--orange);min-width:30px;flex-shrink:0;padding-top:3px;}
+.item-text{flex:1;font-size:14px;line-height:1.5;outline:none;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;color:var(--black);resize:none;min-height:22px;width:100%;overflow:hidden;}
+.item-text:focus{background:rgba(255,217,61,0.15);}
+.item-delete{border:none;background:transparent;cursor:pointer;color:#ccc;font-size:14px;padding:2px 3px;flex-shrink:0;display:flex;align-items:center;transition:color 0.12s;}
+.item-delete:hover{color:var(--red);}
+
+/* SHARE */
+.share-box{border:var(--border);background:var(--white);box-shadow:var(--shadow-lg);padding:20px;margin-top:20px;}
+.share-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.community-feed{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:380px;overflow-y:auto;}
+.feed-card{border:2px solid var(--black);padding:14px;background:var(--bg);cursor:pointer;transition:all 0.12s;box-shadow:2px 2px 0 var(--black);}
+.feed-card:hover{box-shadow:none;transform:translate(2px,2px);}
+.feed-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;}
+.feed-meta{font-size:11px;color:#999;margin-top:2px;}
+.feed-preview{font-size:12px;color:#666;margin-top:7px;line-height:1.6;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:500;justify-content:center;align-items:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg);border:var(--border);box-shadow:var(--shadow-lg);padding:28px;max-width:580px;width:100%;max-height:80vh;overflow-y:auto;position:relative;}
+.modal-close{position:absolute;top:14px;right:14px;border:var(--border);background:var(--black);color:var(--white);width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
+.modal-list{display:flex;flex-direction:column;gap:5px;margin-top:14px;}
+.modal-item{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;border:2px solid var(--black);background:var(--white);}
+.modal-num{font-family:'Syne',sans-serif;font-weight:800;color:var(--orange);min-width:26px;font-size:12px;padding-top:1px;}
+.modal-text{font-size:13px;line-height:1.5;flex:1;}
+
+/* LOADING */
+.loading-overlay{display:none;position:fixed;inset:0;background:var(--black);z-index:400;justify-content:center;align-items:center;flex-direction:column;gap:18px;}
+.loading-overlay.open{display:flex;}
+.loading-dots{display:flex;gap:8px;}
+.dot{width:14px;height:14px;border-radius:50%;animation:bounce 0.8s ease infinite;}
+.dot:nth-child(1){background:var(--pink);animation-delay:0s;}
+.dot:nth-child(2){background:var(--yellow);animation-delay:0.15s;}
+.dot:nth-child(3){background:var(--blue);animation-delay:0.3s;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);};}
+@keyframes spin{to{transform:rotate(360deg);}}@keyframes spin{to{transform:rotate(360deg);}}.loading-text{color:var(--white);font-family:'Syne',sans-serif;font-size:17px;font-weight:800;}
+
+.divider{border:none;border-top:2px dashed #ddd;margin:20px 0;}
+.zodiac-display{margin-top:7px;font-size:12px;color:#888;display:flex;gap:8px;align-items:center;}
+
+/* TRAIT CUSTOM ADD */
+.trait-add-row{display:flex;gap:7px;margin-top:10px;}
+.trait-add-row input{flex:1;font-size:13px;padding:8px 12px;border:2px solid var(--black);background:var(--white);outline:none;font-family:'Noto Sans TC',sans-serif;box-shadow:2px 2px 0 var(--black);}
+.trait-add-row input:focus{box-shadow:3px 3px 0 var(--pink);}
+.trait-add-btn{padding:8px 14px;border:2px solid var(--black);background:var(--yellow);font-size:12px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;box-shadow:2px 2px 0 var(--black);white-space:nowrap;}
+.trait-add-btn:hover{box-shadow:none;transform:translate(2px,2px);}
+
+/* CATEGORY TAGS on list items */
+.item-cat{
+  font-size:9px;font-weight:700;letter-spacing:0.12em;font-family:'Syne',sans-serif;
+  padding:2px 7px;border:1.5px solid;flex-shrink:0;align-self:flex-start;margin-top:4px;
+  white-space:nowrap;
+}
+.cat-daily{color:#FF6B35;border-color:#FF6B35;background:rgba(255,107,53,0.07);}
+.cat-skill{color:#4ECDC4;border-color:#4ECDC4;background:rgba(78,205,196,0.07);}
+.cat-dream{color:#A855F7;border-color:#A855F7;background:rgba(168,85,247,0.07);}
+.cat-habit{color:#6BCB77;border-color:#6BCB77;background:rgba(107,203,119,0.07);}
+
+/* CATEGORY LEGEND */
+.cat-legend{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;padding:12px;background:var(--white);border:var(--border);}
+.cat-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-family:'Syne',sans-serif;}
+.cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* ENCOURAGEMENT BOX */
+.encourage-box{
+  margin:28px 0;
+  border:var(--border);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.encourage-header{
+  background:var(--pink);padding:14px 18px;
+  display:flex;align-items:center;gap:9px;
+}
+.encourage-header-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--white);}
+.encourage-body{padding:20px 18px;background:var(--white);}
+.encourage-text{font-size:14px;line-height:2;color:#333;}
+.encourage-loading{color:#aaa;font-size:13px;display:flex;align-items:center;gap:8px;}
+
+/* SITE FOOTER */
+.site-footer{
+  background:var(--black);color:var(--white);
+  padding:24px 20px;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  border-top:3px solid var(--yellow);
+  margin-top:48px;
+}
+.footer-social{display:flex;gap:12px;align-items:center;}
+.social-link{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 18px;border:2px solid rgba(255,255,255,0.3);
+  color:var(--white);text-decoration:none;
+  font-size:12px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:0.1em;
+  transition:all 0.15s;
+}
+.social-link:hover{background:var(--yellow);color:var(--black);border-color:var(--yellow);}
+.footer-tag{font-size:11px;color:#888;letter-spacing:0.1em;font-family:'Syne',sans-serif;}
+.footer-brand{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.05em;color:#ddd;}
+
+@media(max-width:480px){
+  .mbti-grid{grid-template-columns:1fr;}
+  .page{padding:52px 14px 40px;}
+  .footer-social{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('zh')">中文</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <div class="loading-text" id="loadingText">生成中...</div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="progress-steps">
+    <div class="p-step active"></div><div class="p-step"></div><div class="p-step"></div><div class="p-step"></div>
+  </div>
+  <div class="page-header">
+    <div class="step-tag" data-zh="第一步" data-en="STEP 1">第一步</div>
+    <h1 class="page-title" data-zh="你是誰" data-en="Who Are You">你是誰</h1>
+    <p class="page-sub" data-zh="填寫基本資料，讓我們認識你" data-en="Tell us a bit about yourself">填寫基本資料，讓我們認識你</p>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span data-zh="匿名綽號 / 代稱" data-en="Nickname / Alias">匿名綽號 / 代稱</span>
+    </div>
+    <input type="text" id="nickname" data-zh-ph="你想用什麼名字出現在這個清單？" data-en-ph="What name should appear on your list?" placeholder="你想用什麼名字出現在這個清單？"/>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span data-zh="出生日期" data-en="Date of Birth">出生日期</span>
+    </div>
+    <input type="date" id="birthdate" onchange="updateZodiac()"/>
+    <div class="zodiac-display" id="zodiacDisplay"></div>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      <span data-zh="職業 / 畢業科系 / 夢想職業" data-en="Career / Major / Dream Job">職業 / 畢業科系 / 夢想職業</span>
+    </div>
+    <input type="text" id="career" data-zh-ph="ex. 護理師、電機系、想開咖啡廳" data-en-ph="e.g. Nurse, Electrical Eng, Want to open a café" placeholder="ex. 護理師、電機系、想開咖啡廳"/>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <span data-zh="MBTI — 選出你的類型" data-en="MBTI — Select Your Type">MBTI — 選出你的類型</span>
+    </div>
+    <div class="mbti-grid" id="mbtiGrid"></div>
+    <div id="mbtiResult" style="font-family:'Syne',sans-serif;font-size:13px;color:#888;margin-top:4px;min-height:18px;"></div>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span data-zh="選幾個描述你個性的詞" data-en="Pick words that describe your personality">選幾個描述你個性的詞</span>
+    </div>
+    <div class="trait-grid" id="traitGrid"></div>
+    <div class="trait-add-row">
+      <input type="text" id="traitCustomInput" data-zh-ph="自己輸入一個詞加入..." data-en-ph="Add your own word..." placeholder="自己輸入一個詞加入..." onkeydown="if(event.key==='Enter')addCustomTrait()"/>
+      <button class="trait-add-btn" onclick="addCustomTrait()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goPage(2)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span data-zh="下一步" data-en="Next">下一步</span>
+    </button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="progress-steps">
+    <div class="p-step done"></div><div class="p-step active"></div><div class="p-step"></div><div class="p-step"></div>
+  </div>
+  <div class="page-header">
+    <div class="step-tag" data-zh="第二步" data-en="STEP 2">第二步</div>
+    <h1 class="page-title" data-zh="你的故事" data-en="Your Story">你的故事</h1>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span data-zh="你做過最瘋狂的事（可以多件）" data-en="Craziest things you've done (add as many as you want)">你做過最瘋狂的事（可以多件）</span>
+    </div>
+    <div class="crazy-list" id="crazyList"></div>
+    <button class="add-btn" onclick="addCrazy()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span data-zh="再加一件" data-en="Add another">再加一件</span>
+    </button>
+  </div>
+
+  <div class="field-group">
+    <div class="field-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span data-zh="目前人生遇到最大的困境或煩惱" data-en="Biggest challenge or worry right now">目前人生遇到最大的困境或煩惱</span>
+    </div>
+    <textarea id="struggle" rows="3" data-zh-ph="可以是工作、感情、家庭、身心健康..." data-en-ph="Could be work, relationships, family, mental health..." placeholder="可以是工作、感情、家庭、身心健康..."></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goPage(1)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span data-zh="上一步" data-en="Back">上一步</span>
+    </button>
+    <button class="btn-primary" onclick="goPage(3)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span data-zh="下一步" data-en="Next">下一步</span>
+    </button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="progress-steps">
+    <div class="p-step done"></div><div class="p-step done"></div><div class="p-step active"></div><div class="p-step"></div>
+  </div>
+  <div class="page-header">
+    <div class="step-tag" data-zh="第三步" data-en="STEP 3">第三步</div>
+    <h1 class="page-title" data-zh="未來的五件事" data-en="Your Future 5">未來的五件事</h1>
+    <p class="page-sub" data-zh="這五件事會直接進入你的百件清單" data-en="These 5 go directly into your 100 list">這五件事會直接進入你的百件清單</p>
+  </div>
+
+  <div class="future-list">
+    <div class="future-item"><span class="future-num">01</span><input type="text" id="f1" data-zh-ph="你最想做的一件事" data-en-ph="The thing you most want to do" placeholder="你最想做的一件事"/></div>
+    <div class="future-item"><span class="future-num">02</span><input type="text" id="f2" data-zh-ph="第二件" data-en-ph="Second thing" placeholder="第二件"/></div>
+    <div class="future-item"><span class="future-num">03</span><input type="text" id="f3" data-zh-ph="第三件" data-en-ph="Third thing" placeholder="第三件"/></div>
+    <div class="future-item"><span class="future-num">04</span><input type="text" id="f4" data-zh-ph="第四件" data-en-ph="Fourth thing" placeholder="第四件"/></div>
+    <div class="future-item"><span class="future-num">05</span><input type="text" id="f5" data-zh-ph="第五件" data-en-ph="Fifth thing" placeholder="第五件"/></div>
+  </div>
+
+  <button class="inspiration-toggle" onclick="toggleInspiration()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span data-zh="沒靈感？從50個推薦選項中挑選" data-en="No ideas? Pick from 50 personalized suggestions">沒靈感？從50個推薦選項中挑選</span>
+  </button>
+  <div class="inspiration-panel" id="inspirationPanel">
+    <p class="insp-note" id="inspNote" data-zh="根據你的 MBTI 與個性為你量身推薦，可多選" data-en="Personalized based on your MBTI & personality — pick multiple">根據你的 MBTI 與個性為你量身推薦，可多選</p>
+    <div class="insp-grid" id="inspGrid"></div>
+    <div class="btn-row" style="margin-top:14px;">
+      <button class="btn-secondary btn-blue" style="width:100%;justify-content:center;" onclick="addPickedToFuture()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-zh="把選到的加入清單" data-en="Add selected to list">把選到的加入清單</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goPage(2)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span data-zh="上一步" data-en="Back">上一步</span>
+    </button>
+    <button class="btn-primary btn-pink" onclick="generateList()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span data-zh="幫我生成 100 件事！" data-en="Generate My 100 Things!">幫我生成 100 件事！</span>
+    </button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <div class="progress-steps" style="padding-top:48px;">
+    <div class="p-step done"></div><div class="p-step done"></div><div class="p-step done"></div><div class="p-step done"></div>
+  </div>
+
+  <div class="result-header">
+    <div class="result-name" id="resultName"></div>
+    <div class="result-meta" id="resultMeta"></div>
+  </div>
+
+  <div class="controls-bar">
+    <span class="ctrl-label" data-zh="操作：" data-en="Actions:">操作：</span>
+    <button class="btn-secondary btn-orange" onclick="copyList()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span data-zh="複製文字檔" data-en="Copy as Text">複製文字檔</span>
+    </button>
+    <button class="btn-secondary btn-green" onclick="shareAndView()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span data-zh="分享並查看大家的清單" data-en="Share & View Others">分享並查看大家的清單</span>
+    </button>
+  </div>
+
+  <div id="listContainer" class="list-container"></div>
+
+  <!-- ENCOURAGEMENT BOX -->
+  <div class="encourage-box" id="encourageBox" style="display:none;">
+    <div class="encourage-header">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span class="encourage-header-title" data-zh="給你的話" data-en="A Note for You">給你的話</span>
+    </div>
+    <div class="encourage-body">
+      <div class="encourage-loading" id="encourageLoading">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <span data-zh="分析中..." data-en="Analyzing...">分析中...</span>
+      </div>
+      <p class="encourage-text" id="encourageText" style="display:none;"></p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:8px 0 32px;">
+    <button class="btn-primary btn-pink" onclick="regenerateMissing()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      <span data-zh="刪除後補齊至 100 件" data-en="Refill deleted items to 100">刪除後補齊至 100 件</span>
+    </button>
+  </div>
+
+  <div class="share-box" id="shareSection" style="display:none;">
+    <div class="share-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span data-zh="大家的百件清單" data-en="Everyone's 100 Lists">大家的百件清單</span>
+    </div>
+    <div class="community-feed" id="communityFeed"></div>
+  </div>
+
+  <div class="btn-row" style="margin-top:28px;">
+    <button class="btn-secondary" onclick="startOver()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span data-zh="重新開始" data-en="Start Over">重新開始</span>
+    </button>
+  </div>
+</div>
+
+<script>
+var currentLang = 'zh';
+var currentPage = 1;
+var mbtiSelected = {EI:'', NS:'', TF:'', JP:''};
+var selectedTraitIdxs = [];
+var customTraits = [];
+var pickedInsp = [];
+var finalList = [];
+var sharedLists = JSON.parse(localStorage.getItem('sharedLists_v2') || '[]');
+var crazyCount = 0;
+var inspirationItems = [];
+var currentUserData = {};
+
+var MBTI_DATA = {
+  zh: [
+    {key:'EI', label:'能量來源', opts:[
+      {l:'E', w:'外向', desc:'從與人互動中充電'},
+      {l:'I', w:'內向', desc:'從獨處靜思中充電'}
+    ]},
+    {key:'NS', label:'認知方式', opts:[
+      {l:'N', w:'直覺', desc:'看重可能性與未來'},
+      {l:'S', w:'實感', desc:'專注當下具體細節'}
+    ]},
+    {key:'TF', label:'決策方式', opts:[
+      {l:'T', w:'思考', desc:'以邏輯客觀為主'},
+      {l:'F', w:'情感', desc:'以感受價值觀為主'}
+    ]},
+    {key:'JP', label:'生活方式', opts:[
+      {l:'J', w:'判斷', desc:'喜歡計畫與秩序'},
+      {l:'P', w:'感知', desc:'喜歡彈性與隨興'}
+    ]}
+  ],
+  en: [
+    {key:'EI', label:'Energy Source', opts:[
+      {l:'E', w:'Extrovert', desc:'Recharged by people'},
+      {l:'I', w:'Introvert', desc:'Recharged by solitude'}
+    ]},
+    {key:'NS', label:'Perception', opts:[
+      {l:'N', w:'Intuition', desc:'Focused on possibilities'},
+      {l:'S', w:'Sensing', desc:'Focused on concrete facts'}
+    ]},
+    {key:'TF', label:'Decision Making', opts:[
+      {l:'T', w:'Thinking', desc:'Logic & objectivity'},
+      {l:'F', w:'Feeling', desc:'Emotions & values'}
+    ]},
+    {key:'JP', label:'Lifestyle', opts:[
+      {l:'J', w:'Judging', desc:'Prefers plans & structure'},
+      {l:'P', w:'Perceiving', desc:'Prefers flexibility'}
+    ]}
+  ]
+};
+
+var TRAITS = {
+  zh: ['冒險型','安靜型','創意型','分析型','樂觀型','敏感型','務實型','理想主義','社交型','獨立型','競爭型','佛系型','好奇型','完美主義','隨性型','同理心強','行動派','深思型'],
+  en: ['Adventurous','Quiet','Creative','Analytical','Optimistic','Sensitive','Pragmatic','Idealistic','Social','Independent','Competitive','Easygoing','Curious','Perfectionist','Spontaneous','Empathetic','Action-oriented','Deep thinker']
+};
+
+var ZODIAC_ZH = ['摩羯座','水瓶座','雙魚座','牡羊座','金牛座','雙子座','巨蟹座','獅子座','處女座','天秤座','天蠍座','射手座'];
+var ZODIAC_EN = ['Capricorn','Aquarius','Pisces','Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius'];
+var ZODIAC_SYM = ['♑','♒','♓','♈','♉','♊','♋','♌','♍','♎','♏','♐'];
+
+var ALL_INSPO = {
+  zh: [
+    '在沙漠露營看星星','學會衝浪','跳傘','一個人出國旅行','騎馬','學做陶器',
+    '在咖啡廳打工一個月','用新語言達到日常對話','種一片小菜園','養一隻寵物',
+    '寫完整整一年的日記','辦一場個人展覽或表演','當志工超過三個月','學會游泳',
+    '爬上百岳其中一座','在海外住三個月','學瑜伽或冥想','做一道完整的法式料理',
+    '學會騎摩托車','出版一本書或電子書','拍一支短片並上傳','參加馬拉松完賽',
+    '學一種樂器彈出一首歌','在農場生活一週','看一場百老匯或音樂劇',
+    '學占星或塔羅','嘗試斷食排毒三天','深海潛水','拜訪從沒聽過的國家',
+    '完成一幅自己的畫','寫一首歌','學會倒立','參加一場大型音樂節',
+    '和陌生人共進一頓飯','連續晨跑30天','把頭髮剪掉試試',
+    '完全不用手機一整週','學手語基礎對話','幫助一個陌生人改變處境',
+    '在山頂看一次日出','嘗試一種極限運動','做一件讓自己害怕的事',
+    '寫一封信給十年後的自己','重新聯絡失去聯絡的朋友',
+    '在海邊生活一個月','學習釀酒或手工製茶','讀完100本書',
+    '當一個月的海外志工','做一件讓父母或自己驕傲的事'
+  ],
+  en: [
+    'Camp in the desert and stargaze','Learn to surf','Go skydiving','Travel solo abroad',
+    'Ride a horse','Learn pottery','Work a café shift for a month',
+    'Hold a conversation in a new language','Grow a vegetable garden','Adopt a pet',
+    'Keep a journal for a full year','Hold a personal exhibition or show',
+    'Volunteer for over 3 months','Learn to swim','Hike a major mountain',
+    'Live abroad for 3 months','Learn yoga or meditation','Cook a full French meal',
+    'Learn to ride a motorbike','Publish a book or e-book','Film and upload a short film',
+    'Complete a marathon','Learn an instrument and play a full song',
+    'Live on a farm for a week','Watch a Broadway or West End show',
+    'Study astrology or tarot','Do a 3-day juice detox','Try deep sea diving',
+    'Visit a country you\'ve never heard of','Complete your own painting','Write a song',
+    'Learn to do a handstand','Attend a major music festival',
+    'Share a meal with a stranger','Run every morning for 30 days',
+    'Try a bold new hairstyle','Go phone-free for a whole week',
+    'Learn basic sign language','Help a stranger turn their life around',
+    'Watch a sunrise from a mountain peak','Try an extreme sport',
+    'Do one thing that genuinely scares you','Write a letter to your future self',
+    'Reconnect with a lost friend','Live by the sea for a month',
+    'Learn to brew beer or make tea','Read 100 books',
+    'Volunteer abroad for a month','Do something that makes you truly proud'
+  ]
+};
+
+function getZodiacIdx(month, day) {
+  var dates = [20,19,20,20,21,21,23,23,23,23,22,22];
+  if (day < dates[month-1]) {
+    return month === 1 ? 11 : month - 2;
+  }
+  return month - 1;
+}
+
+function updateZodiac() {
+  var val = document.getElementById('birthdate').value;
+  var el = document.getElementById('zodiacDisplay');
+  if (!val) { el.innerHTML = ''; return; }
+  var parts = val.split('-');
+  var month = parseInt(parts[1]);
+  var day = parseInt(parts[2]);
+  var year = parseInt(parts[0]);
+  var idx = getZodiacIdx(month, day);
+  var names = currentLang === 'zh' ? ZODIAC_ZH : ZODIAC_EN;
+  var age = new Date().getFullYear() - year;
+  var ageStr = currentLang === 'zh' ? age + '歲' : age + ' years old';
+  el.innerHTML = '<span style="font-weight:700">' + names[idx] + '</span><span style="color:#bbb">&nbsp;|&nbsp;</span><span>' + ageStr + '</span>';
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', (lang === 'zh' && b.textContent.trim() === '中文') || (lang === 'en' && b.textContent.trim() === 'EN'));
+  });
+  document.querySelectorAll('[data-zh]').forEach(function(el) {
+    el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en;
+  });
+  document.querySelectorAll('[data-zh-ph]').forEach(function(el) {
+    el.placeholder = lang === 'zh' ? el.dataset.zhPh : el.dataset.enPh;
+  });
+  document.getElementById('loadingText').textContent = lang === 'zh' ? '生成中...' : 'Generating...';
+  document.querySelector('.footer-tag').textContent = lang === 'zh' ? '記錄被僱用之前的每一件事' : 'Documenting everything before getting hired';
+  buildMBTI();
+  buildTraits();
+  buildInspiration();
+  updateZodiac();
+  if (finalList.length > 0) renderList();
+}
+
+function buildMBTI() {
+  var grid = document.getElementById('mbtiGrid');
+  grid.innerHTML = '';
+  MBTI_DATA[currentLang].forEach(function(pair) {
+    var div = document.createElement('div');
+    div.className = 'mbti-pair';
+    var optsHtml = pair.opts.map(function(o) {
+      var sel = mbtiSelected[pair.key] === o.l ? ' selected' : '';
+      return '<div class="mbti-opt' + sel + '" onclick="selectMBTI(\'' + pair.key + '\',\'' + o.l + '\',this)">' +
+        '<span class="mbti-letter">' + o.l + '</span>' +
+        '<span class="mbti-word">' + o.w + '</span>' +
+        '<span class="mbti-desc">' + o.desc + '</span>' +
+      '</div>';
+    }).join('');
+    div.innerHTML = '<div class="mbti-pair-label">' + pair.label + '</div><div class="mbti-options">' + optsHtml + '</div>';
+    grid.appendChild(div);
+  });
+  updateMBTIResult();
+}
+
+function selectMBTI(key, val, el) {
+  mbtiSelected[key] = val;
+  el.closest('.mbti-options').querySelectorAll('.mbti-opt').forEach(function(o) { o.classList.remove('selected'); });
+  el.classList.add('selected');
+  updateMBTIResult();
+  buildInspiration();
+}
+
+function updateMBTIResult() {
+  var type = (mbtiSelected.EI||'?')+(mbtiSelected.NS||'?')+(mbtiSelected.TF||'?')+(mbtiSelected.JP||'?');
+  var el = document.getElementById('mbtiResult');
+  el.textContent = type === '????' ? '' : (currentLang === 'zh' ? '你的 MBTI：' + type : 'Your MBTI: ' + type);
+}
+
+function getMBTI() {
+  return (mbtiSelected.EI||'X')+(mbtiSelected.NS||'X')+(mbtiSelected.TF||'X')+(mbtiSelected.JP||'X');
+}
+
+function buildTraits() {
+  var grid = document.getElementById('traitGrid');
+  grid.innerHTML = '';
+  TRAITS[currentLang].forEach(function(t, i) {
+    var chip = document.createElement('div');
+    chip.className = 'trait-chip' + (selectedTraitIdxs.indexOf(i) !== -1 ? ' selected' : '');
+    chip.textContent = t;
+    chip.onclick = function() {
+      var idx = selectedTraitIdxs.indexOf(i);
+      if (idx !== -1) selectedTraitIdxs.splice(idx, 1);
+      else selectedTraitIdxs.push(i);
+      chip.classList.toggle('selected');
+    };
+    grid.appendChild(chip);
+  });
+}
+
+function getTraits() {
+  var base = selectedTraitIdxs.map(function(i) { return TRAITS[currentLang][i]; });
+  return base.concat(customTraits);
+}
+
+function addCustomTrait() {
+  var input = document.getElementById('traitCustomInput');
+  var val = input.value.trim();
+  if (!val) return;
+  customTraits.push(val);
+  // Add as a selected chip in the trait grid
+  var grid = document.getElementById('traitGrid');
+  var chip = document.createElement('div');
+  chip.className = 'trait-chip selected';
+  chip.style.background = 'var(--pink)';
+  chip.style.color = 'var(--white)';
+  chip.textContent = val;
+  var chipVal = val;
+  chip.onclick = function() {
+    var idx = customTraits.indexOf(chipVal);
+    if (idx !== -1) customTraits.splice(idx, 1);
+    chip.remove();
+  };
+  grid.appendChild(chip);
+  input.value = '';
+  input.focus();
+}
+
+function addCrazy(val) {
+  crazyCount++;
+  var list = document.getElementById('crazyList');
+  var item = document.createElement('div');
+  item.className = 'crazy-item';
+  var id = 'crazy_' + crazyCount;
+  item.id = id;
+  var ph = currentLang === 'zh' ? '描述這件事...' : 'Describe it...';
+  item.innerHTML = '<input type="text" placeholder="' + ph + '" value="' + (val || '') + '" style="flex:1"/>' +
+    '<button class="remove-btn" onclick="document.getElementById(\'' + id + '\').remove()">' +
+    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+    '</button>';
+  list.appendChild(item);
+}
+
+function getCrazyThings() {
+  return Array.from(document.querySelectorAll('.crazy-item input')).map(function(i) { return i.value.trim(); }).filter(Boolean);
+}
+
+function buildInspiration() {
+  var mbti = getMBTI();
+  var traits = getTraits();
+  var src = ALL_INSPO[currentLang];
+  // Personalize order by mbti seed
+  var seed = mbti.split('').reduce(function(a,c) { return a + c.charCodeAt(0); }, 0);
+  inspirationItems = src.map(function(item, i) {
+    return {text: item, score: Math.sin((seed + traits.length) * (i + 1)) * 10000};
+  }).sort(function(a,b) { return b.score - a.score; });
+
+  var grid = document.getElementById('inspGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  pickedInsp = [];
+  inspirationItems.forEach(function(item, i) {
+    var chip = document.createElement('div');
+    chip.className = 'insp-chip';
+    chip.textContent = item.text;
+    chip.onclick = function() {
+      chip.classList.toggle('picked');
+      var idx = pickedInsp.indexOf(i);
+      if (idx !== -1) pickedInsp.splice(idx, 1);
+      else pickedInsp.push(i);
+    };
+    grid.appendChild(chip);
+  });
+}
+
+function toggleInspiration() {
+  buildInspiration();
+  document.getElementById('inspirationPanel').classList.toggle('open');
+}
+
+function addPickedToFuture() {
+  var inputs = ['f1','f2','f3','f4','f5'];
+  var freeSlots = inputs.filter(function(id) { return !document.getElementById(id).value.trim(); });
+  pickedInsp.forEach(function(idx) {
+    if (freeSlots.length === 0) return;
+    var slotId = freeSlots.shift();
+    document.getElementById(slotId).value = inspirationItems[idx].text;
+  });
+  document.getElementById('inspirationPanel').classList.remove('open');
+  pickedInsp = [];
+}
+
+function getFuture5() {
+  return ['f1','f2','f3','f4','f5'].map(function(id) { return document.getElementById(id).value.trim(); }).filter(Boolean);
+}
+
+function goPage(n) {
+  document.getElementById('page' + currentPage).classList.remove('active');
+  document.getElementById('page' + n).classList.add('active');
+  currentPage = n;
+  window.scrollTo(0,0);
+}
+
+function startOver() {
+  finalList = [];
+  goPage(1);
+}
+
+async function generateList() {
+  var nickname = document.getElementById('nickname').value.trim() || (currentLang === 'zh' ? '旅行者' : 'Traveler');
+  var birthdate = document.getElementById('birthdate').value;
+  var career = document.getElementById('career').value.trim();
+  var mbti = getMBTI();
+  var traits = getTraits().join(currentLang === 'zh' ? '、' : ', ');
+  var crazy = getCrazyThings();
+  var struggle = document.getElementById('struggle').value.trim();
+  var future5 = getFuture5();
+  var isZh = currentLang === 'zh';
+
+  var age = '';
+  var zodiac = '';
+  if (birthdate) {
+    var parts = birthdate.split('-');
+    var month = parseInt(parts[1]);
+    var day = parseInt(parts[2]);
+    var year = parseInt(parts[0]);
+    age = new Date().getFullYear() - year;
+    var idx = getZodiacIdx(month, day);
+    zodiac = isZh ? ZODIAC_ZH[idx] : ZODIAC_EN[idx];
+  }
+
+  showLoading(true);
+
+  // Save for encouragement
+  currentUserData = {nickname: nickname, age: age, zodiac: zodiac, mbti: mbti, traits: traits, crazy: crazy, struggle: struggle, isZh: isZh};
+
+  var prompt = isZh
+    ? '你是一個人生清單生成助手。根據以下個人資料，生成95個這個人一生中應該完成的事。請確保清單中包含以下四種類型的混合（不用標記，自然混入）：一些可以今天就著手的日常小事、一些可以學習的技能、一些比較遠大需要時間的夢想、一些可以養成的日常習慣。不含職業相關目標，不含編號。\n\n個人資料：\n- 年齡：' + age + '歲，星座：' + zodiac + '\n- MBTI：' + mbti + '\n- 個性特質：' + traits + '\n- 做過最瘋狂的事：' + (crazy.join('、') || '無') + '\n- 目前最大困境：' + (struggle || '無') + '\n\n請直接輸出JSON格式，不要有任何說明文字：\n{"items":["...","..."]}  共95個項目，每個5-20字的動詞短句。'
+    : 'You are a life bucket list generator. Based on the profile below, generate exactly 95 unique life bucket list items. Make sure to naturally mix four types: some things achievable TODAY (small daily actions), some skills to learn, some big ambitious dreams, some habits to build. NO career goals, NO numbering.\n\nProfile:\n- Age: ' + age + ', Zodiac: ' + zodiac + '\n- MBTI: ' + mbti + '\n- Traits: ' + traits + '\n- Craziest things done: ' + (crazy.join(', ') || 'None') + '\n- Biggest struggle: ' + (struggle || 'None') + '\n\nOutput ONLY JSON, no explanation:\n{"items":["...","..."]} — exactly 95 short verb phrases (3-10 words each).';
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        system: isZh ? '只輸出JSON，不輸出任何其他文字。' : 'Output JSON only. No markdown, no explanation.',
+        messages: [{role: 'user', content: prompt}]
+      })
+    });
+    var data = await resp.json();
+    var raw = (data.content || []).find(function(b) { return b.type === 'text'; });
+    var text = raw ? raw.text : '{}';
+    var clean = text.replace(/```json|```/g, '').trim();
+    var parsed = JSON.parse(clean);
+    var aiItems = (parsed.items || []).slice(0, 95);
+    finalList = future5.concat(aiItems).slice(0, 100);
+    showLoading(false);
+    buildResultPage(nickname, age, zodiac, mbti);
+    goPage(4);
+    generateEncouragement();
+  } catch(e) {
+    showLoading(false);
+    alert(isZh ? '生成失敗，請再試一次。' : 'Generation failed, please try again.');
+  }
+}
+
+async function regenerateMissing() {
+  var missing = 100 - finalList.length;
+  if (missing <= 0) {
+    alert(currentLang === 'zh' ? '清單已滿 100 件！' : 'List already has 100 items!');
+    return;
+  }
+  showLoading(true);
+  var isZh = currentLang === 'zh';
+  var existing = finalList.join(isZh ? '、' : ', ');
+  var prompt = isZh
+    ? '已有清單：' + existing + '\n\n請再生成' + missing + '個不重複的人生清單項目（簡短動詞短句，不含職業描述），直接輸出JSON：{"items":["..."]}'
+    : 'Existing list: ' + existing + '\n\nGenerate exactly ' + missing + ' more unique life bucket list items (short verb phrases, no career items). JSON only: {"items":["..."]}';
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: isZh ? '只輸出JSON。' : 'Output JSON only.',
+        messages: [{role: 'user', content: prompt}]
+      })
+    });
+    var data = await resp.json();
+    var raw = (data.content || []).find(function(b) { return b.type === 'text'; });
+    var text = raw ? raw.text : '{}';
+    var parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
+    var newItems = (parsed.items || []).slice(0, missing);
+    finalList = finalList.concat(newItems);
+    showLoading(false);
+    renderList();
+  } catch(e) {
+    showLoading(false);
+    alert(isZh ? '補齊失敗，請再試一次。' : 'Failed, please try again.');
+  }
+}
+
+function buildResultPage(name, age, zodiac, mbti) {
+  var isZh = currentLang === 'zh';
+  document.getElementById('resultName').textContent = isZh ? name + ' 的一生 100 件事' : name + "'s 100 Things in Life";
+  var meta = document.getElementById('resultMeta');
+  var tags = [];
+  if (mbti !== 'XXXX') tags.push(mbti);
+  if (zodiac) tags.push(zodiac);
+  if (age) tags.push(isZh ? age + '歲' : 'Age ' + age);
+  tags.push(isZh ? finalList.length + '/100件' : finalList.length + '/100');
+  meta.innerHTML = tags.map(function(t) { return '<span class="meta-tag">' + t + '</span>'; }).join('');
+  renderList();
+}
+
+function renderList() {
+  var container = document.getElementById('listContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  finalList.forEach(function(item, i) {
+    var row = document.createElement('div');
+    row.className = 'list-item';
+    var num = document.createElement('span');
+    num.className = 'item-num';
+    num.textContent = String(i+1).padStart(2,'0') + '.';
+    var ta = document.createElement('textarea');
+    ta.className = 'item-text';
+    ta.rows = 1;
+    ta.value = item;
+    ta.oninput = (function(idx) { return function() { finalList[idx] = ta.value; autoResizeTA(ta); }; })(i);
+    var del = document.createElement('button');
+    del.className = 'item-delete';
+    del.title = currentLang === 'zh' ? '刪除' : 'Delete';
+    del.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    del.onclick = (function(idx) { return function() { deleteItem(idx); }; })(i);
+    row.appendChild(num);
+    row.appendChild(ta);
+    row.appendChild(del);
+    container.appendChild(row);
+    setTimeout(function() { autoResizeTA(ta); }, 0);
+  });
+}
+
+function autoResizeTA(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function deleteItem(i) {
+  finalList.splice(i, 1);
+  renderList();
+}
+
+function copyList() {
+  var isZh = currentLang === 'zh';
+  var name = document.getElementById('resultName') ? document.getElementById('resultName').textContent : '';
+  var text = name + '\n\n';
+  finalList.forEach(function(item, i) {
+    text += (i+1) + '. ' + item + '\n';
+  });
+  navigator.clipboard.writeText(text).then(function() {
+    alert(isZh ? '已複製到剪貼簿！' : 'Copied to clipboard!');
+  }).catch(function() {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); alert(isZh ? '已複製！' : 'Copied!'); }
+    catch(e) { alert(isZh ? '請手動複製' : 'Please copy manually'); }
+    document.body.removeChild(ta);
+  });
+}
+
+function shareAndView() {
+  var nickname = document.getElementById('nickname').value.trim() || (currentLang === 'zh' ? '旅行者' : 'Traveler');
+  var mbti = getMBTI();
+  var birthdate = document.getElementById('birthdate').value;
+  var zodiac = '';
+  if (birthdate) {
+    var parts = birthdate.split('-');
+    var idx = getZodiacIdx(parseInt(parts[1]), parseInt(parts[2]));
+    zodiac = currentLang === 'zh' ? ZODIAC_ZH[idx] : ZODIAC_EN[idx];
+  }
+  var entry = {nickname: nickname, mbti: mbti !== 'XXXX' ? mbti : '', zodiac: zodiac, items: finalList.slice(), lang: currentLang, time: Date.now()};
+  sharedLists.unshift(entry);
+  if (sharedLists.length > 50) sharedLists = sharedLists.slice(0,50);
+  localStorage.setItem('sharedLists_v2', JSON.stringify(sharedLists));
+  var section = document.getElementById('shareSection');
+  section.style.display = 'block';
+  renderCommunity();
+  section.scrollIntoView({behavior:'smooth'});
+  alert(currentLang === 'zh' ? '已分享！現在可以查看大家的清單。' : 'Shared! You can now view everyone\'s lists.');
+}
+
+function renderCommunity() {
+  var feed = document.getElementById('communityFeed');
+  feed.innerHTML = '';
+  if (sharedLists.length === 0) {
+    feed.innerHTML = '<p style="color:#aaa;font-size:13px">' + (currentLang === 'zh' ? '還沒有人分享，你是第一個！' : "No lists yet — you're the first!") + '</p>';
+    return;
+  }
+  sharedLists.forEach(function(entry, i) {
+    var card = document.createElement('div');
+    card.className = 'feed-card';
+    var preview = entry.items.slice(0,3).map(function(it,j) { return (j+1) + '. ' + it; }).join('<br>');
+    var meta = [entry.mbti, entry.zodiac].filter(Boolean).join(' · ');
+    card.innerHTML = '<div class="feed-name">' + entry.nickname + (currentLang === 'zh' ? ' 的清單' : '\'s list') + '</div>' +
+      (meta ? '<div class="feed-meta">' + meta + '</div>' : '') +
+      '<div class="feed-preview">' + preview + '...</div>';
+    card.onclick = function() { openModal(i); };
+    feed.appendChild(card);
+  });
+}
+
+function openModal(idx) {
+  var entry = sharedLists[idx];
+  var el = document.getElementById('modalContent');
+  var isZh = currentLang === 'zh';
+  var meta = [entry.mbti, entry.zodiac].filter(Boolean).join(' · ');
+  el.innerHTML = '<div class="feed-name" style="font-size:19px;margin-bottom:4px">' + entry.nickname + (isZh ? ' 的百件清單' : '\'s 100 Things') + '</div>' +
+    (meta ? '<div class="feed-meta" style="margin-bottom:14px">' + meta + '</div>' : '') +
+    '<div class="modal-list">' +
+    entry.items.map(function(it, i) {
+      return '<div class="modal-item"><span class="modal-num">' + (i+1) + '.</span><span class="modal-text">' + it + '</span></div>';
+    }).join('') + '</div>';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+async function generateEncouragement() {
+  var d = currentUserData;
+  if (!d || !d.isZh !== undefined === false) return;
+  var box = document.getElementById('encourageBox');
+  var loadEl = document.getElementById('encourageLoading');
+  var textEl = document.getElementById('encourageText');
+  box.style.display = 'block';
+  loadEl.style.display = 'flex';
+  textEl.style.display = 'none';
+  var isZh = d.isZh;
+  var prompt = isZh
+    ? '你是一個溫暖而有洞察力的朋友。根據以下這個人的資料，寫一段100-150字的個人化文字：先簡單分析這個人的個性與特質（1-2句），然後針對他目前遭遇的困難給予真誠的鼓勵（2-3句），最後用一句話給他一個人生啟發或行動的提醒。語氣溫暖、真誠，像朋友說話，不要像心理師，不要使用任何 emoji 符號。\n\n個人資料：\n- 年齡：' + d.age + '歲，星座：' + d.zodiac + '\n- MBTI：' + d.mbti + '\n- 個性：' + d.traits + '\n- 做過最瘋狂的事：' + (d.crazy.join('、') || '無') + '\n- 目前困境：' + (d.struggle || '未填寫') + '\n\n只輸出那段文字，不要任何標題或前言。'
+    : 'You are a warm, insightful friend. Based on this person\'s profile, write a short personal note (100-150 words): briefly reflect on their personality (1-2 sentences), then give genuine encouragement about their current struggle (2-3 sentences), then close with one inspiring action-oriented line. Tone: warm, honest, like a friend — not a therapist. No emoji.\n\nProfile:\n- Age: ' + d.age + ', Zodiac: ' + d.zodiac + '\n- MBTI: ' + d.mbti + '\n- Traits: ' + d.traits + '\n- Craziest things done: ' + (d.crazy.join(', ') || 'None') + '\n- Current struggle: ' + (d.struggle || 'Not provided') + '\n\nOutput only the note, no titles or preamble.';
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        system: isZh ? '只輸出文字段落，不要任何標題、符號或 emoji。' : 'Output only a plain paragraph. No titles, no emoji, no symbols.',
+        messages: [{role: 'user', content: prompt}]
+      })
+    });
+    var data = await resp.json();
+    var raw = (data.content || []).find(function(b) { return b.type === 'text'; });
+    var text = raw ? raw.text.trim() : '';
+    loadEl.style.display = 'none';
+    textEl.style.display = 'block';
+    textEl.textContent = text;
+  } catch(e) {
+    loadEl.style.display = 'none';
+    textEl.style.display = 'block';
+    textEl.textContent = isZh ? '（無法載入，請稍後再試）' : '(Could not load, please try again)';
+  }
+}
+
+function showLoading(show) {
+  document.getElementById('loadingOverlay').classList.toggle('open', show);
+  document.getElementById('loadingText').textContent = currentLang === 'zh' ? '正在為你生成專屬清單...' : 'Generating your personalized list...';
+}
+
+// INIT
+buildMBTI();
+buildTraits();
+addCrazy();
+buildInspiration();
+</script>
+
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">100 Things Before Hired</div>
+  <div class="footer-social">
+    <a href="https://instagram.com/100thingsbeforehired" target="_blank" rel="noopener" class="social-link">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <span>@100thingsbeforehired</span>
+    </a>
+  </div>
+  <div class="footer-tag" data-zh="記錄被僱用之前的每一件事" data-en="Documenting everything before getting hired">記錄被僱用之前的每一件事</div>
+</footer>
+
+</body>
+</html>
